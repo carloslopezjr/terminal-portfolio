@@ -1,0 +1,28 @@
+/* Mobile terminal-themed styles
+	 Matches variables and general look-and-feel from styles.css but optimized for phones.
+*/
+:root{
+	--bg-color: #000b00;
+	--text-color: #ff5833;
+	--accent-color: #ff5833;
+	--muted-color: #0d0d0d;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at center, #001400 0%, var(--bg-color) 60%);font-family:SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;color:var(--text-color);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+.terminal-like{padding:18px}
+.line{margin:8px 0;white-space:pre-wrap}
+.title{color:var(--accent-color);font-size:16px}
+.muted{color:rgba(255,255,255,0.12)}
+.section{margin-top:10px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.03)}
+.section-title{color:var(--accent-color);font-weight:600}
+.small{font-size:12px}
+.terminal-link{color:var(--accent-color);text-decoration:underline}
+
+/* make text legible on small screens */
+@media (max-width:520px){
+	.line{font-size:15px}
+	.title{font-size:15px}
+}
+
