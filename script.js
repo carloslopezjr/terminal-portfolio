@@ -126,8 +126,19 @@ function cmd_open(arg){
   }
   appendLine(`${project.title}`, 'system');
   appendLine(`${project.description}`);
-  appendLine(`Repo: ${project.repo}`);
-  appendLine(`Demo: ${project.demo}`);
+// Put the label outside the anchor so "Repo:" / "Demo:" are not part of the link
+const repoEl = document.createElement('div');
+repoEl.className = 'line';
+repoEl.innerHTML = `Repo: <a class="terminal-link" href="${project.repo}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.repo)}</a>`;
+OUTPUT.appendChild(repoEl);
+scrollToBottom();
+
+const demoEl = document.createElement('div');
+demoEl.className = 'line';
+demoEl.innerHTML = `Demo: <a class="terminal-link" href="${project.demo}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.demo)}</a>`;
+OUTPUT.appendChild(demoEl);
+scrollToBottom();
+
 }
 
 function cmd_clear(){
