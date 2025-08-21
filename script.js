@@ -9,7 +9,7 @@ const CURSOR = document.getElementById('cursor');
 const PROMPT = document.getElementById('prompt');
 
 // -------------------- Config / Data --------------------
-const PROMPT_TEXT = 'guest@portfolio:~$';
+const PROMPT_TEXT = 'carlos@portfolio:~$';
 const TYPING_SPEED = 18; // ms per char for system typing
 
 // Projects data: add or edit entries here. Each project should have
