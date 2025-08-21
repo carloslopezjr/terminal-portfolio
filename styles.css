@@ -1,0 +1,99 @@
+/* Terminal Portfolio Styles */
+:root{
+  --bg-color: #000b00;
+  --text-color: #33ff33;
+  --accent-color: #55ff55;
+  --muted-color: #0d0d0d;
+}
+
+*{box-sizing:border-box}
+html,body,#terminal{height:100%;}
+body{
+  margin:0;
+  background: radial-gradient(ellipse at center, #001400 0%, var(--bg-color) 60%);
+  font-family: SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.terminal{
+  height:100vh;
+  width:100vw;
+  color:var(--text-color);
+  padding:24px 28px;
+  overflow:auto;
+  background-color:var(--bg-color);
+  position:relative;
+}
+
+.output{white-space:pre-wrap; line-height:1.45;}
+
+.prompt-line{
+  display:flex;
+  align-items:center;
+  /* reduce gap so the visual cursor sits closer to the prompt */
+  gap:4px;
+  margin-top:8px;
+}
+
+.prompt{
+  color:var(--accent-color);
+  margin-right:6px;
+}
+
+.cmd{
+  outline:none;
+  border:none;
+  background:transparent;
+  color:var(--text-color);
+  caret-color:transparent; /* hide native caret */
+  white-space:pre;
+  /* allow the input to collapse to zero width when empty so the visual cursor sits right after the prompt */
+  min-width:0;
+}
+
+.cursor{
+  color:var(--accent-color);
+  /* remove extra left margin so the block cursor aligns tightly with the text */
+  margin-left:0;
+  opacity:1;
+  animation: blink 1s steps(2,start) infinite;
+}
+
+@keyframes blink{50%{opacity:0}}
+
+/* text glow */
+.output, .prompt, .cmd, .cursor{
+  text-shadow: 0 0 6px rgba(85,255,85,0.15), 0 0 12px rgba(85,255,85,0.05);
+}
+
+/* small prompt font tweak */
+.prompt, .cmd{font-size:16px}
+
+.line{margin:4px 0}
+.line.system{color:var(--accent-color);}
+.line.command{color:var(--text-color);}
+.line.link{color: #7ef57e; text-decoration:underline}
+
+/* subtle CRT / scanline overlay */
+.screen-overlay::before{
+  content: "";
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  pointer-events:none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0.035) 1px
+  );
+  mix-blend-mode: overlay;
+  opacity:0.45;
+}
+
+/* make links look terminal-y */
+a.terminal-link{ color: #8ff78f; text-decoration:underline; }
+
+/* responsive: ensure content fits */
+@media (max-width:520px){
+  .prompt, .cmd{font-size:14px}
+}

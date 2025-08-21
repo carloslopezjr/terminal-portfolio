@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Terminal Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="terminal" class="terminal" tabindex="0" aria-label="Terminal Portfolio">
+    <div id="output" class="output" aria-live="polite"></div>
+
+    <!-- Prompt line: contenteditable span used for input so we can style cursor precisely -->
+    <div id="prompt" class="prompt-line">
+      <span class="prompt">guest@portfolio:~$</span>
+      <span id="cmd" class="cmd" contenteditable="true" spellcheck="false" role="textbox" aria-label="Command input"></span>
+      <span id="cursor" class="cursor">▉</span>
+    </div>
+
+    <div id="screen-overlay" class="screen-overlay" aria-hidden="true"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
