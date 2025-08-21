@@ -27,7 +27,7 @@ Customization:
 Commands supported (type these in the terminal):
 
 - `help` — list commands
-- `ls` — list projects
+- `ls | ls -al` — list projects (simple | detailed)
 - `about` — short about section
 - `open <project-id>` — open a project (shows repo and demo link)
 - `clear` — clear the terminal
