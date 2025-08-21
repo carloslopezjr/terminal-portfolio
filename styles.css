@@ -68,7 +68,8 @@ body{
 
 /* text glow */
 .output, .prompt, .cmd, .cursor{
-  text-shadow: 0 0 6px rgba(85,255,85,0.15), 0 0 12px rgba(85,255,85,0.05);
+  /* use the accent color for glow so links and text match the red theme */
+  text-shadow: 0 0 6px rgba(255,88,51,0.14), 0 0 12px rgba(255,88,51,0.05);
 }
 
 /* small prompt font tweak */
@@ -77,7 +78,7 @@ body{
 .line{margin:4px 0}
 .line.system{color:var(--accent-color);}
 .line.command{color:var(--text-color);}
-.line.link{color: #7ef57e; text-decoration:underline}
+.line.link{color: var(--accent-color); text-decoration:underline}
 
 /* subtle CRT / scanline overlay */
 .screen-overlay::before{
@@ -94,8 +95,8 @@ body{
   opacity:0.45;
 }
 
-/* make links look terminal-y */
-a.terminal-link{ color: #8ff78f; text-decoration:underline; }
+/* make links look terminal-y and match accent color */
+a.terminal-link{ color: var(--accent-color); text-decoration:underline; }
 
 /* responsive: ensure content fits */
 @media (max-width:520px){

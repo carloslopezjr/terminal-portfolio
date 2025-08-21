@@ -1,12 +1,27 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" translate="no" class="notranslate">
 <head>
   <meta charset="utf-8" />
+  <meta name="google" content="notranslate" />
+  <meta http-equiv="Content-Language" content="en" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Terminal Portfolio</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <script>
+    (function(){
+      try {
+        var ua = navigator.userAgent || '';
+        var isMobileUA = /Mobi|Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+        var narrow = window.matchMedia && window.matchMedia('(max-width:700px)').matches;
+        if(isMobileUA || narrow){
+          // Redirect to simplified mobile view (non-terminal)
+          window.location.replace('mobile.html');
+        }
+      } catch(e) { /* ignore */ }
+    })();
+  </script>
   <main id="terminal" class="terminal" tabindex="0" aria-label="Terminal Portfolio">
     <div id="output" class="output" aria-live="polite"></div>
 
