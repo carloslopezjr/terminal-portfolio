@@ -17,70 +17,82 @@ const TYPING_SPEED = 18; // ms per char for system typing
 const PROJECTS = [
   {
     id: 'project1',
-    title: 'Terminal Portfolio',
-    description: 'A retro terminal-style single-page portfolio with interactive commands and project demos.',
-    repo: 'https://github.com/yourname/terminal-portfolio',
-    demo: 'https://youtu.be/dQw4w9WgXcQ'
+    title: 'VidScore Pro',
+    description: 'Easily score your short-form content to understand where it can improve to boost social media engagement.',
+    repo: 'https://github.com/carloslopezjr/VidScore-Pro',
+    demo: '[DEMO PENDING]'
   },
   {
     id: 'project2',
-    title: 'CLI-Notes',
-    description: 'A minimal note-taking app that runs in the terminal with search and tags.',
-    repo: 'https://github.com/yourname/cli-notes',
-    demo: 'https://youtu.be/example2'
+    title: 'schedule-to-calendar-heb',
+    description: 'Without no automated way to integrate your H-E-B work schedule to Google Calendar, this project fixes that.',
+    repo: 'https://github.com/carloslopezjr/schedule-to-calendar-heb',
+    demo: '[DEMO PENDING]'
   },
   {
     id: 'project3',
-    title: 'Retro-Game',
-    description: 'A small JS game with pixel-art and chiptune audio, playable in-browser.',
-    repo: 'https://github.com/yourname/retro-game',
-    demo: 'https://youtu.be/example3'
-  }
+    title: 'StreamPilot',
+    description: 'Coupled multiple APIs into one to automate pre-stream production setups like stream title, description, thumbnail, and selection of Leetcode problems.',
+    repo: 'https://github.com/carloslopezjr/StreamPilot',
+    demo: '[DEMO PENDING]'
+  },
+  {
+  id: 'project4',
+    title: 'Door.ai',
+    description: 'Solves specific problem for UTSA Rowdy Creator members who always have to knock on door to join meetings which wasn\'t efficient',
+    repo: 'https://github.com/carloslopezjr/Door.Ai',
+    demo: '[DEMO PENDING]'
+  },
+
 ];
 
 // -------------------- Professional / Academic Data --------------------
 // Edit these arrays to showcase your experience, involvement, and education.
 const EXPERIENCES = [
   {
-    company: 'Acme Corp',
-    title: 'Frontend Engineer',
-    period: '2022 - Present',
+    company: 'Visa Inc',
+    title: 'Software Engineer Intern',
+    period: 'May 2025 - August 2025',
     bullets: [
-      'Built responsive, accessible web applications using React and vanilla JS',
-      'Improved core metrics by optimizing bundle size and rendering performance'
+      'Developed an intelligent agent workflow using LangGraph to automate anomaly interpretation and rule generation, reducing time from anomaly detection to mitigation from hours/days to near real-time.',
+      'Built and integrated agent explanation workflow in real-time anomaly detection dashboard using websockets to deliver instant information to client side.',
+      'Collaborated in an agile, fast-paced environment, proactively providing updates, gathering feedback, and adapting to ambiguity through iterative development and communication with stakeholders.'
     ]
   },
-  {
-    company: 'Startup Labs',
-    title: 'Fullstack Developer',
-    period: '2019 - 2022',
-    bullets: [
-      'Implemented REST APIs and small Node services',
-      'Delivered multiple client projects, focusing on UX and reliability'
-    ]
-  }
 ];
 
 const INVOLVEMENT = [
   {
-    org: 'Open Source Contributor',
-    role: 'Maintainer / Contributor',
-    details: 'Contributed bug fixes and documentation to several OSS projects.'
+    org: 'Rowdy Creators',
+    role: 'Vice President',
+    details: 'Ensuring retention rates and engagement in organization increases.'
   },
   {
-    org: 'Local Meetups',
-    role: 'Speaker / Organizer',
-    details: 'Presented talks about frontend performance and developer tooling.'
+    org: 'HardWorkingGeniuses YouTube ',
+    role: 'Co-host / Streamer',
+    details: 'Aimed to help beginners build confidence in their problem-solving by solving Leetcode problems.'
   }
 ];
 
 const EDUCATION = [
   {
-    school: 'State University',
+    school: 'University of Texas at San Antonio',
     degree: 'B.S. in Computer Science',
+    period: '2023 - 2025',
+    // notes: 'Relevant coursework: Algorithms, Systems, Web Development'
+  },
+  {
+    school: 'University of Texas at San Antonio',
+    degree: 'B.A. in Communications, Minor in Marketing',
+    period: '2019 - 2023',
+    // notes: ''
+  },
+  {
+    school: 'East Central High School',
     period: '2015 - 2019',
-    notes: 'Relevant coursework: Algorithms, Systems, Web Development'
-  }
+    notes: 'Interests were in video production and computer hardware classes'
+  },
+
 ];
 
 
@@ -281,7 +293,12 @@ function cmd_involvement(){
 function cmd_education(){
   appendLine('Education:', 'system');
   EDUCATION.forEach(ed=>{
-    appendLine(`${ed.school} — ${ed.degree} (${ed.period})`);
+    const parts = [];
+    if (ed.school) parts.push(ed.school);
+    if (ed.degree) parts.push(ed.degree);
+    let line = parts.join(' — ');
+    if (ed.period) line = line ? `${line} (${ed.period})` : ed.period;
+    appendLine(line);
     if(ed.notes) appendLine(`  ${ed.notes}`);
   });
 }
