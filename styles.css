@@ -2,7 +2,11 @@
 :root{
   --bg-color: #000b00;
   --text-color: #ff5833;
+  /* softer, more readable regular text that harmonizes with the red accent */
+  --text-regular: #ffbfa9;
   --accent-color: #ff5833;
+  /* noticeable link color (contrasts with the dark background and the red accent) */
+  --link-color: #00d1ff;
   --muted-color: #0d0d0d;
 }
 
@@ -14,12 +18,14 @@ body{
   font-family: SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  /* default to the softer regular text color for non-bold content */
+  color: var(--text-regular);
 }
 
 .terminal{
   height:100vh;
   width:100vw;
-  color:var(--text-color);
+  color:var(--text-regular);
   padding:24px 28px;
   overflow:auto;
   background-color:var(--bg-color);
@@ -45,7 +51,7 @@ body{
   outline:none;
   border:none;
   background:transparent;
-  color:var(--text-color);
+  color:var(--text-regular);
   caret-color:transparent; /* hide native caret */
   white-space:pre;
   /* allow the input to collapse to zero width when empty so the visual cursor sits right after the prompt */
@@ -76,9 +82,9 @@ body{
 .prompt, .cmd{font-size:16px}
 
 .line{margin:4px 0}
-.line.system{color:var(--accent-color);}
-.line.command{color:var(--text-color);}
-.line.link{color: var(--accent-color); text-decoration:underline}
+.line.system{color: var(--accent-color);} 
+.line.command{color:var(--text-regular);} 
+.line.link{color: var(--link-color); text-decoration:underline}
 
 /* subtle CRT / scanline overlay */
 .screen-overlay::before{
@@ -95,8 +101,13 @@ body{
   opacity:0.45;
 }
 
+/* Control button styling */
+.top-controls{ position: absolute; top: 12px; right: 18px; }
+.control-btn{ background: rgba(255,255,255,0.02); border: 1px solid rgba(255,88,51,0.09); color: var(--text-regular); padding:6px 10px; border-radius:6px; cursor:pointer; font-family:inherit }
+.control-btn[aria-pressed="true"]{ background: rgba(255,88,51,0.06); border-color: rgba(255,88,51,0.2); }
+
 /* make links look terminal-y and match accent color */
-a.terminal-link{ color: var(--accent-color); text-decoration:underline; }
+a.terminal-link{ color: var(--link-color); text-decoration:underline; }
 
 /* responsive: ensure content fits */
 @media (max-width:520px){

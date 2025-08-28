@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en" translate="no" class="notranslate">
 <head>
   <meta charset="utf-8" />
@@ -29,7 +29,7 @@
   <main id="terminal" class="terminal" tabindex="0" aria-label="Terminal Portfolio">
     <div id="output" class="output" aria-live="polite"></div>
 
-    <!-- Prompt line: contenteditable span used for input so we can style cursor precisely -->
+    Prompt line: contenteditable span used for input so we can style cursor precisely
     <div id="prompt" class="prompt-line">
       <span class="prompt">carlos@portfolio:~$</span>
       <span id="cmd" class="cmd" contenteditable="true" spellcheck="false" role="textbox" aria-label="Command input"></span>
@@ -42,4 +42,104 @@
   <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
+</html> -->
+
+<!doctype html>
+<html lang="en" translate="no" class="notranslate">
+<head>
+  <meta charset="utf-8" />
+  <meta name="google" content="notranslate" />
+  <meta http-equiv="Content-Language" content="en" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carlos — Portfolio (mobile)</title>
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+  <main class="mobile" role="main">
+    <div class="terminal-like">
+      <div class="line title">carlos@portfolio:~$</div>
+
+      <div class="section">
+        <div class="line section-title">About</div>
+        <div id="mobile-about" class="line"></div>
+      </div>
+
+      <div class="section">
+        <div class="line section-title">Experience</div>
+        <div id="mobile-experience"></div>
+      </div>
+
+      <div class="section">
+        <div class="line section-title">Involvement</div>
+        <div id="mobile-involvement"></div>
+      </div>
+
+      <div class="section">
+        <div class="line section-title">Education</div>
+        <div id="mobile-education"></div>
+      </div>
+
+      <div class="section">
+        <div class="line section-title">Projects</div>
+        <div id="mobile-project-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="line section-title">Contact</div>
+        <div id="mobile-contact" class="line"></div>
+      </div>
+
+      <!-- <div class="line muted small">Tip: tap links to open. Want the interactive terminal? <a class="terminal-link" href="/?view=desktop">Open desktop view</a></div> -->
+    </div>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    // render helpers using shared globals from data.js
+    function mkLine(text){ const d = document.createElement('div'); d.className = 'line'; d.innerHTML = text; return d; }
+
+    const projRoot = document.getElementById('mobile-project-list');
+    (window.PROJECTS || []).forEach(p=>{
+      projRoot.appendChild(mkLine(`<strong>${p.title}</strong> — ${p.description} <a class=\"terminal-link\" href=\"${p.repo}\" target=\"_blank\">Repo</a> <a class=\"terminal-link\" href=\"${p.demo || '#'}\" target=\"_blank\">Demo</a>`));
+    });
+
+    // About & Contact from shared data
+    const aboutRoot = document.getElementById('mobile-about');
+    if(aboutRoot){
+      const a = window.ABOUT || {};
+      // const skills = (a.skills || []).join(', ');
+      // const loc = a.location ? ` — ${a.location}` : '';
+      aboutRoot.innerHTML = `${a.summary || ''}`;
+    }
+
+    const contactRoot = document.getElementById('mobile-contact');
+    if(contactRoot){
+      const c = window.CONTACT || {};
+      let html = '';
+      // if(c.email) html += `Email: <a class=\"terminal-link\" href=\"mailto:${c.email}\">${c.email}</a><br>`;
+      // if(c.repo) html += `Repo: <a class=\"terminal-link\" href=\"${c.repo}\" target=\"_blank\">${c.repo}</a><br>`;
+      (c.links || []).forEach(l=>{ html += `<a class=\"terminal-link\" href=\"${l.url}\" target=\"_blank\">${l.label}</a> ` });
+      contactRoot.innerHTML = html || '—';
+    }
+
+    const expRoot = document.getElementById('mobile-experience');
+    (window.EXPERIENCES || []).forEach(e=>{
+      expRoot.appendChild(mkLine(`<strong>${e.company}</strong> — ${e.title} (${e.period})`));
+      (e.bullets||[]).forEach(b=>expRoot.appendChild(mkLine(`&nbsp;&nbsp;- ${b}`)));
+    });
+
+    const invRoot = document.getElementById('mobile-involvement');
+    (window.INVOLVEMENT || []).forEach(i=>{
+      invRoot.appendChild(mkLine(`<strong>${i.org}</strong> — ${i.role}`));
+      invRoot.appendChild(mkLine(`${i.details}`));
+    });
+
+    const eduRoot = document.getElementById('mobile-education');
+    (window.EDUCATION || []).forEach(ed=>{
+      eduRoot.appendChild(mkLine(`<strong>${ed.school}</strong> — ${ed.degree} (${ed.period})`)); // fix degree issue: don't include degree if blank in data.js
+      if(ed.notes) eduRoot.appendChild(mkLine(`${ed.notes}`));
+    });
+  </script>
+</body>
 </html>
+
