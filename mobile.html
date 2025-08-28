@@ -15,7 +15,7 @@
 
       <div class="section">
         <div class="line section-title">About</div>
-        <div class="line">Hi — I build polished web experiences. This site uses a retro terminal UI on desktop; this mobile view keeps the terminal theme while listing all content for touch users.</div>
+        <div id="mobile-about" class="line"></div>
       </div>
 
       <div class="section">
@@ -40,61 +40,57 @@
 
       <div class="section">
         <div class="line section-title">Contact</div>
-        <div class="line">Email: <a class="terminal-link" href="mailto:you@example.com">you@example.com</a></div>
-        <div class="line">Repo: <a class="terminal-link" href="https://github.com/carloslopezjr/terminal-portfolio" target="_blank" rel="noopener">terminal-portfolio</a></div>
+        <div id="mobile-contact" class="line"></div>
       </div>
 
       <div class="line muted small">Tip: tap links to open. Want the interactive terminal? <a class="terminal-link" href="/?view=desktop">Open desktop view</a></div>
     </div>
   </main>
 
+  <script src="data.js"></script>
   <script>
-    // Mirror the small data arrays from script.js — keep in-sync manually or extract to shared data file
-    const PROJECTS = [
-      {id:'project1', title:'Terminal Portfolio', description:'A retro terminal-style single-page portfolio with interactive commands and project demos.', repo:'https://github.com/yourname/terminal-portfolio', demo:'#'},
-      {id:'project2', title:'CLI-Notes', description:'A minimal note-taking app that runs in the terminal with search and tags.', repo:'https://github.com/yourname/cli-notes', demo:'#'},
-      {id:'project3', title:'Retro-Game', description:'A small JS game with pixel-art and chiptune audio, playable in-browser.', repo:'https://github.com/yourname/retro-game', demo:'#'}
-    ];
-
-    const EXPERIENCES = [
-      {company:'Acme Corp', title:'Frontend Engineer', period:'2022 - Present', bullets:['Built responsive, accessible web applications using React and vanilla JS','Improved core metrics by optimizing bundle size and rendering performance']},
-      {company:'Startup Labs', title:'Fullstack Developer', period:'2019 - 2022', bullets:['Implemented REST APIs and small Node services','Delivered multiple client projects, focusing on UX and reliability']}
-    ];
-
-    const INVOLVEMENT = [
-      {org:'Open Source Contributor', role:'Maintainer / Contributor', details:'Contributed bug fixes and documentation to several OSS projects.'},
-      {org:'Local Meetups', role:'Speaker / Organizer', details:'Presented talks about frontend performance and developer tooling.'}
-    ];
-
-    const EDUCATION = [
-      {school:'State University', degree:'B.S. in Computer Science', period:'2015 - 2019', notes:'Relevant coursework: Algorithms, Systems, Web Development'}
-    ];
-
-    // render helpers
-    function mkLine(text, cls){
-      const d = document.createElement('div'); d.className = 'line'; d.innerHTML = text; return d;
-    }
+    // render helpers using shared globals from data.js
+    function mkLine(text){ const d = document.createElement('div'); d.className = 'line'; d.innerHTML = text; return d; }
 
     const projRoot = document.getElementById('mobile-project-list');
-    PROJECTS.forEach(p=>{
-      projRoot.appendChild(mkLine(`<strong>${p.title}</strong> — ${p.description} <a class=\"terminal-link\" href=\"${p.repo}\" target=\"_blank\">Repo</a> <a class=\"terminal-link\" href=\"${p.demo}\" target=\"_blank\">Demo</a>`));
+    (window.PROJECTS || []).forEach(p=>{
+      projRoot.appendChild(mkLine(`<strong>${p.title}</strong> — ${p.description} <a class=\"terminal-link\" href=\"${p.repo}\" target=\"_blank\">Repo</a> <a class=\"terminal-link\" href=\"${p.demo || '#'}\" target=\"_blank\">Demo</a>`));
     });
 
+    // About & Contact from shared data
+    const aboutRoot = document.getElementById('mobile-about');
+    if(aboutRoot){
+      const a = window.ABOUT || {};
+      // const skills = (a.skills || []).join(', ');
+      // const loc = a.location ? ` — ${a.location}` : '';
+      aboutRoot.innerHTML = `${a.summary || ''}`;
+    }
+
+    const contactRoot = document.getElementById('mobile-contact');
+    if(contactRoot){
+      const c = window.CONTACT || {};
+      let html = '';
+      // if(c.email) html += `Email: <a class=\"terminal-link\" href=\"mailto:${c.email}\">${c.email}</a><br>`;
+      // if(c.repo) html += `Repo: <a class=\"terminal-link\" href=\"${c.repo}\" target=\"_blank\">${c.repo}</a><br>`;
+      (c.links || []).forEach(l=>{ html += `<a class=\"terminal-link\" href=\"${l.url}\" target=\"_blank\">${l.label}</a> ` });
+      contactRoot.innerHTML = html || '—';
+    }
+
     const expRoot = document.getElementById('mobile-experience');
-    EXPERIENCES.forEach(e=>{
+    (window.EXPERIENCES || []).forEach(e=>{
       expRoot.appendChild(mkLine(`<strong>${e.company}</strong> — ${e.title} (${e.period})`));
-      e.bullets.forEach(b=>expRoot.appendChild(mkLine(`&nbsp;&nbsp;- ${b}`)));
+      (e.bullets||[]).forEach(b=>expRoot.appendChild(mkLine(`&nbsp;&nbsp;- ${b}`)));
     });
 
     const invRoot = document.getElementById('mobile-involvement');
-    INVOLVEMENT.forEach(i=>{
+    (window.INVOLVEMENT || []).forEach(i=>{
       invRoot.appendChild(mkLine(`<strong>${i.org}</strong> — ${i.role}`));
       invRoot.appendChild(mkLine(`${i.details}`));
     });
 
     const eduRoot = document.getElementById('mobile-education');
-    EDUCATION.forEach(ed=>{
-      eduRoot.appendChild(mkLine(`<strong>${ed.school}</strong> — ${ed.degree} (${ed.period})`));
+    (window.EDUCATION || []).forEach(ed=>{
+      eduRoot.appendChild(mkLine(`<strong>${ed.school}</strong> — ${ed.degree} (${ed.period})`)); // fix degree issue: don't include degree if blank in data.js
       if(ed.notes) eduRoot.appendChild(mkLine(`${ed.notes}`));
     });
   </script>

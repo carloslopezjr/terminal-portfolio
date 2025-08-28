@@ -12,88 +12,14 @@ const PROMPT = document.getElementById('prompt');
 const PROMPT_TEXT = 'carlos@portfolio:~$';
 const TYPING_SPEED = 18; // ms per char for system typing
 
-// Projects data: add or edit entries here. Each project should have
-// id (unique short name), title, description, repo and demo links.
-const PROJECTS = [
-  {
-    id: 'project1',
-    title: 'VidScore Pro',
-    description: 'Easily score your short-form content to understand where it can improve to boost social media engagement.',
-    repo: 'https://github.com/carloslopezjr/VidScore-Pro',
-    demo: '[DEMO PENDING]'
-  },
-  {
-    id: 'project2',
-    title: 'schedule-to-calendar-heb',
-    description: 'Without no automated way to integrate your H-E-B work schedule to Google Calendar, this project fixes that.',
-    repo: 'https://github.com/carloslopezjr/schedule-to-calendar-heb',
-    demo: '[DEMO PENDING]'
-  },
-  {
-    id: 'project3',
-    title: 'StreamPilot',
-    description: 'Coupled multiple APIs into one to automate pre-stream production setups like stream title, description, thumbnail, and selection of Leetcode problems.',
-    repo: 'https://github.com/carloslopezjr/StreamPilot',
-    demo: '[DEMO PENDING]'
-  },
-  {
-  id: 'project4',
-    title: 'Door.ai',
-    description: 'Solves specific problem for UTSA Rowdy Creator members who always have to knock on door to join meetings which wasn\'t efficient',
-    repo: 'https://github.com/carloslopezjr/Door.Ai',
-    demo: '[DEMO PENDING]'
-  },
-
-];
+// Projects data: loaded from shared `data.js` if present. Edit `data.js` to update across pages.
+const PROJECTS = (window.PROJECTS && Array.isArray(window.PROJECTS)) ? window.PROJECTS : [];
 
 // -------------------- Professional / Academic Data --------------------
-// Edit these arrays to showcase your experience, involvement, and education.
-const EXPERIENCES = [
-  {
-    company: 'Visa Inc',
-    title: 'Software Engineer Intern',
-    period: 'May 2025 - August 2025',
-    bullets: [
-      'Developed an intelligent agent workflow using LangGraph to automate anomaly interpretation and rule generation, reducing time from anomaly detection to mitigation from hours/days to near real-time.',
-      'Built and integrated agent explanation workflow in real-time anomaly detection dashboard using websockets to deliver instant information to client side.',
-      'Collaborated in an agile, fast-paced environment, proactively providing updates, gathering feedback, and adapting to ambiguity through iterative development and communication with stakeholders.'
-    ]
-  },
-];
-
-const INVOLVEMENT = [
-  {
-    org: 'Rowdy Creators',
-    role: 'Vice President',
-    details: 'Ensuring retention rates and engagement in organization increases.'
-  },
-  {
-    org: 'HardWorkingGeniuses YouTube ',
-    role: 'Co-host / Streamer',
-    details: 'Aimed to help beginners build confidence in their problem-solving by solving Leetcode problems.'
-  }
-];
-
-const EDUCATION = [
-  {
-    school: 'University of Texas at San Antonio',
-    degree: 'B.S. in Computer Science',
-    period: '2023 - 2025',
-    // notes: 'Relevant coursework: Algorithms, Systems, Web Development'
-  },
-  {
-    school: 'University of Texas at San Antonio',
-    degree: 'B.A. in Communications, Minor in Marketing',
-    period: '2019 - 2023',
-    // notes: ''
-  },
-  {
-    school: 'East Central High School',
-    period: '2015 - 2019',
-    notes: 'Interests were in video production and computer hardware classes'
-  },
-
-];
+// Load these arrays from the shared `data.js` (window globals) so mobile and desktop stay in sync.
+const EXPERIENCES = (window.EXPERIENCES && Array.isArray(window.EXPERIENCES)) ? window.EXPERIENCES : [];
+const INVOLVEMENT = (window.INVOLVEMENT && Array.isArray(window.INVOLVEMENT)) ? window.INVOLVEMENT : [];
+const EDUCATION = (window.EDUCATION && Array.isArray(window.EDUCATION)) ? window.EDUCATION : [];
 
 
 // -------------------- State --------------------
@@ -336,9 +262,21 @@ function cmd_ls_simple(){
 }
 
 function cmd_about(){
-  typeLine('Hi — I\'m a developer who loves building small tools and polished web experiences.', 'system').then(()=>{
-    appendLine('Skills: JavaScript, Node, CSS, UX');
-  appendLine('Type "ls | ls -al" to see projects or "help" for commands.');
+  const about = (window.ABOUT) ? window.ABOUT : null;
+  const contact = (window.CONTACT) ? window.CONTACT : null;
+  const summary = about && about.summary ? about.summary : 'Hi — I\'m a developer who loves building small tools and polished web experiences.';
+  typeLine(summary, 'system').then(()=>{
+    if(about && Array.isArray(about.skills) && about.skills.length){
+      // appendLine('Skills: ' + about.skills.join(', '));
+    }
+    if(about && about.location){
+      // appendLine('Location: ' + about.location);
+    }
+    if(contact){
+      // if(contact.email) appendLine('Contact: ' + contact.email);
+      // if(contact.repo) appendLine('Repo: ' + contact.repo);
+    }
+    appendLine('Type "ls | ls -al" to see projects or "help" for commands.');
   });
 }
 

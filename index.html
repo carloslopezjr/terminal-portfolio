@@ -15,9 +15,13 @@
         var ua = navigator.userAgent || '';
         var isMobileUA = /Mobi|Android|iPhone|iPad|iPod|Mobile/i.test(ua);
         var narrow = window.matchMedia && window.matchMedia('(max-width:700px)').matches;
-        if(isMobileUA || narrow){
-          // Redirect to simplified mobile view (non-terminal)
-          window.location.replace('mobile.html');
+        // allow ?view=desktop to bypass redirect
+        var params = new URLSearchParams(window.location.search);
+        if(!params.has('view') || params.get('view') !== 'desktop'){
+          if(isMobileUA || narrow){
+            // Redirect to simplified mobile view (non-terminal)
+            window.location.replace('mobile.html');
+          }
         }
       } catch(e) { /* ignore */ }
     })();
@@ -35,6 +39,7 @@
     <div id="screen-overlay" class="screen-overlay" aria-hidden="true"></div>
   </main>
 
+  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
