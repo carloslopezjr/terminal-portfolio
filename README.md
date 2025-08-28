@@ -1,5 +1,7 @@
 # Terminal Portfolio
 
+![Terminal Portfolio screenshot](images/webpage-image.png)
+
 This is a frontend-only single-page portfolio that simulates an interactive terminal interface (retro green-on-black look).
 
 Build and run with Docker:
