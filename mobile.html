@@ -6,7 +6,16 @@
   <meta http-equiv="Content-Language" content="en" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Carlos — Portfolio (mobile)</title>
-  <link rel="stylesheet" href="mobile.css" />
+  <script>
+    // Inject CSS with a cache-busting query param so browsers always fetch the latest file.
+    (function(){
+      var css = 'mobile.css';
+      var l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = css + '?v=' + Date.now();
+      document.head.appendChild(l);
+    })();
+  </script>
 </head>
 <body>
   <main class="mobile" role="main">
@@ -47,52 +56,31 @@
     </div>
   </main>
 
-  <script src="data.js"></script>
   <script>
-    // render helpers using shared globals from data.js
-    function mkLine(text){ const d = document.createElement('div'); d.className = 'line'; d.innerHTML = text; return d; }
+    (function(){
+      function mkLine(text){ const d = document.createElement('div'); d.className = 'line'; d.innerHTML = text; return d; }
 
-    const projRoot = document.getElementById('mobile-project-list');
-    (window.PROJECTS || []).forEach(p=>{
-      projRoot.appendChild(mkLine(`<strong>${p.title}</strong> — ${p.description} <a class=\"terminal-link\" href=\"${p.repo}\" target=\"_blank\">Repo</a> <a class=\"terminal-link\" href=\"${p.demo || '#'}\" target=\"_blank\">Demo</a>`));
-    });
+      function runRender(){
+        const projRoot = document.getElementById('mobile-project-list');
+        (window.PROJECTS || []).forEach(p=>{ projRoot.appendChild(mkLine(`<strong>${p.title}</strong> — ${p.description} <a class="terminal-link" href="${p.repo}" target="_blank">Repo</a> <a class="terminal-link" href="${p.demo || '#'}" target="_blank">Demo</a>`)); });
 
-    // About & Contact from shared data
-    const aboutRoot = document.getElementById('mobile-about');
-    if(aboutRoot){
-      const a = window.ABOUT || {};
-      // const skills = (a.skills || []).join(', ');
-      // const loc = a.location ? ` — ${a.location}` : '';
-      aboutRoot.innerHTML = `${a.summary || ''}`;
-    }
+        const aboutRoot = document.getElementById('mobile-about'); if(aboutRoot){ const a = window.ABOUT || {}; aboutRoot.innerHTML = `${a.summary || ''}`; }
 
-    const contactRoot = document.getElementById('mobile-contact');
-    if(contactRoot){
-      const c = window.CONTACT || {};
-      let html = '';
-      // if(c.email) html += `Email: <a class=\"terminal-link\" href=\"mailto:${c.email}\">${c.email}</a><br>`;
-      // if(c.repo) html += `Repo: <a class=\"terminal-link\" href=\"${c.repo}\" target=\"_blank\">${c.repo}</a><br>`;
-      (c.links || []).forEach(l=>{ html += `<a class=\"terminal-link\" href=\"${l.url}\" target=\"_blank\">${l.label}</a> ` });
-      contactRoot.innerHTML = html || '—';
-    }
+        const contactRoot = document.getElementById('mobile-contact'); if(contactRoot){ const c = window.CONTACT || {}; let html = ''; (c.links || []).forEach(l=>{ html += `<a class="terminal-link" href="${l.url}" target="_blank">${l.label}</a> ` }); contactRoot.innerHTML = html || '—'; }
 
-    const expRoot = document.getElementById('mobile-experience');
-    (window.EXPERIENCES || []).forEach(e=>{
-      expRoot.appendChild(mkLine(`<strong>${e.company}</strong> — ${e.title} (${e.period})`));
-      (e.bullets||[]).forEach(b=>expRoot.appendChild(mkLine(`&nbsp;&nbsp;- ${b}`)));
-    });
+        const expRoot = document.getElementById('mobile-experience'); (window.EXPERIENCES || []).forEach(e=>{ expRoot.appendChild(mkLine(`<strong>${e.company}</strong> — ${e.title} (${e.period})`)); (e.bullets||[]).forEach(b=>expRoot.appendChild(mkLine(`&nbsp;&nbsp;- ${b}`))); });
 
-    const invRoot = document.getElementById('mobile-involvement');
-    (window.INVOLVEMENT || []).forEach(i=>{
-      invRoot.appendChild(mkLine(`<strong>${i.org}</strong> — ${i.role}`));
-      invRoot.appendChild(mkLine(`${i.details}`));
-    });
+        const invRoot = document.getElementById('mobile-involvement'); (window.INVOLVEMENT || []).forEach(i=>{ invRoot.appendChild(mkLine(`<strong>${i.org}</strong> — ${i.role}`)); invRoot.appendChild(mkLine(`${i.details}`)); });
 
-    const eduRoot = document.getElementById('mobile-education');
-    (window.EDUCATION || []).forEach(ed=>{
-      eduRoot.appendChild(mkLine(`<strong>${ed.school}</strong> — ${ed.degree} (${ed.period})`)); // fix degree issue: don't include degree if blank in data.js
-      if(ed.notes) eduRoot.appendChild(mkLine(`${ed.notes}`));
-    });
+        const eduRoot = document.getElementById('mobile-education'); (window.EDUCATION || []).forEach(ed=>{ eduRoot.appendChild(mkLine(`<strong>${ed.school}</strong> — ${ed.degree} (${ed.period})`)); if(ed.notes) eduRoot.appendChild(mkLine(`${ed.notes}`)); });
+      }
+
+      var s = document.createElement('script');
+      s.src = 'data.js?v=' + Date.now();
+      s.onload = runRender;
+      s.onerror = function(){ console.warn('Failed to load data.js'); runRender(); };
+      document.head.appendChild(s);
+    })();
   </script>
 </body>
 </html>
