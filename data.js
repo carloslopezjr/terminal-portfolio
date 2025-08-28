@@ -25,7 +25,7 @@ window.PROJECTS = [
   {
     id: 'project4',
     title: 'Door.ai',
-    description: "Solves specific problem for UTSA Rowdy Creator members who always have to knock on door to join meetings which wasn't efficient",
+    description: "Solves specific problem for UTSA Rowdy Creator members who always have to knock on door to join meetings which wasn't efficient.",
     repo: 'https://github.com/carloslopezjr/Door.Ai',
     demo: '[DEMO PENDING]'
   }
