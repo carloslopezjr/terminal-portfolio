@@ -53,7 +53,8 @@ window.INVOLVEMENT = [
   {
     org: 'HardWorkingGeniuses YouTube ',
     role: 'Co-host / Streamer',
-    details: 'Aimed to help beginners build confidence in their problem-solving by solving Leetcode problems.'
+    details: 'Aimed to help beginners build confidence in their problem-solving by solving Leetcode problems.',
+    url: 'https://www.youtube.com/@hardworkinggeniuses'
   }
 ];
 
